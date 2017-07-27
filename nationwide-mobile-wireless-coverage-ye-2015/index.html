@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset=utf-8 />
+    <title>Nationwide Mobile Wireless Coverage - YE 2015</title>
+    <meta name="viewport" content="initial-scale=1,maximum-scale=1,user-scalable=no">
+    <link href="https://api.tiles.mapbox.com/mapbox.js/v2.1.6/mapbox.css" rel="stylesheet">
+    <link href="https://api.tiles.mapbox.com/mapbox.js/plugins/leaflet-fullscreen/v0.0.4/leaflet.fullscreen.css" rel="stylesheet">
+    
+    <style>
+    body {
+        margin: 0;
+        padding: 0;
+    }
+    
+    #map {
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        width: 100%;
+    } 
+    
+    .legend Span {
+        display: block;
+        float: left;
+        height: 15px;
+        width: 20%;
+    }
+    
+    .legend label {
+        padding-left: 8px;
+        align: center;
+        color: black;
+    }
+    </style>
+</head>
+
+<body>
+    <div id="map"></div>
+    
+    <script src="https://api.tiles.mapbox.com/mapbox.js/v2.1.6/mapbox.js"></script>
+    <script src="https://api.tiles.mapbox.com/mapbox.js/plugins/leaflet-fullscreen/v0.0.4/Leaflet.fullscreen.min.js"></script>
+
+    <script>
+    L.mapbox.accessToken = 'pk.eyJ1IjoiY29tcHV0ZWNoIiwiYSI6InMyblMya3cifQ.P8yppesHki5qMyxTc2CNLg'; //FCC acct token
+
+    var map = L.mapbox.map('map', 'fcc.k74ed5ge', {
+        fullscreenControl: true,
+        attributionControl: false,
+        center: [35, -96],
+        zoom: 4,
+        minZoom: 4,
+        maxZoom: 7
+    });
+    //set attribution to false, so doesn't pull layer names (i.e., "OverallMobile_18th")
+
+    // add new attribution, in place of auto-generated -adds Leaflet attribution
+    var credits = L.control.attribution().addTo(map);
+
+    //add Mapbox/OSM attribution
+    credits.addAttribution("© <a href='https://www.mapbox.com/map-feedback/'>Mapbox</a> © <a href='http://www.openstreetmap.org/copyright'>OpenStreetMap</a>");
+
+    //add Mosaik attribution
+    credits.addAttribution('&copy;Mosaik (Jan 2016), FCC Form 477 (Dec. 2015)');
+
+    var tMosaik = L.mapbox.tileLayer('fcc.cynl99hp');
+
+    L.control.layers({
+        'Coverage based on Mosaik': tMosaik,
+        'Coverage based on FCC Form 477': L.mapbox.tileLayer('fcc.djokrpdo').addTo(map),
+    }, {
+        'States': L.mapbox.tileLayer('fcc.88sbhq44').addTo(map)
+    }, {
+        collapsed: false,
+        position: 'bottomright'
+    }).addTo(map);
+
+    //adds legend
+    // map.legendControl.addLegend(document.getElementById('legend').innerHTML);
+    </script>
+</body>
+
+</html>
