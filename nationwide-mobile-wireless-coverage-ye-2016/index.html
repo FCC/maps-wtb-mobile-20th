@@ -3,7 +3,7 @@
 
 <head>
     <meta charset=utf-8 />
-    <title>Nationwide Mobile Wireless Coverage - YE 2015</title>
+    <title>Nationwide Mobile Wireless Coverage - YE 2016</title>
     <meta name="viewport" content="initial-scale=1,maximum-scale=1,user-scalable=no">
     <link href="https://api.tiles.mapbox.com/mapbox.js/v2.1.6/mapbox.css" rel="stylesheet">
     <link href="https://api.tiles.mapbox.com/mapbox.js/plugins/leaflet-fullscreen/v0.0.4/leaflet.fullscreen.css" rel="stylesheet">
@@ -62,13 +62,14 @@
     credits.addAttribution("© <a href='https://www.mapbox.com/map-feedback/'>Mapbox</a> © <a href='http://www.openstreetmap.org/copyright'>OpenStreetMap</a>");
 
     //add Mosaik attribution
-    credits.addAttribution('&copy;Mosaik (Jan 2016), FCC Form 477 (Dec. 2015)');
+    credits.addAttribution('&copy;Mosaik (Jan 2017), FCC Form 477 (Dec. 2016)');
 
     var tMosaik = L.mapbox.tileLayer('fcc.cynl99hp');
 
+        //2015 files
     L.control.layers({
-        'Coverage based on Mosaik': tMosaik,
-        'Coverage based on FCC Form 477': L.mapbox.tileLayer('fcc.djokrpdo').addTo(map),
+        'Coverage based on Mosaik': tMosaik,  //2015 files
+        'Coverage based on FCC Form 477': L.mapbox.tileLayer('fcc.djokrpdo').addTo(map), //2015 files
     }, {
         'States': L.mapbox.tileLayer('fcc.88sbhq44').addTo(map)
     }, {
