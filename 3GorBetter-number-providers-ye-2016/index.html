@@ -1,0 +1,169 @@
+<!-- Code provided by FCC WTB -->
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset=utf-8 />
+    <title>Mobile Wireless 3G or Better Coverage by Number of Providers-YE 2015</title>
+    <meta name="viewport" content="initial-scale=1,maximum-scale=1,user-scalable=no">
+    <link href="https://api.tiles.mapbox.com/mapbox.js/v3.0.1/mapbox.css" rel="stylesheet">
+    <link href="https://api.tiles.mapbox.com/mapbox.js/plugins/leaflet-fullscreen/v0.0.4/leaflet.fullscreen.css" rel="stylesheet">
+    <style>
+    body {
+        margin: 0;
+        padding: 0;
+    }
+    
+    #map {
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        width: 100%;
+    }
+    
+    .legend span {
+        display: block;
+        float: left;
+        height: 15px;
+        width: 20%;
+    }
+    
+    .legend label {
+        padding-left: 8px;
+        align: center;
+        color: black;
+        display: inline
+    }
+    </style>
+</head>
+
+<body>
+    <!--Legend-->
+    <div id="legend_Mosaik" style="display:none;">
+        <strong>Number of Providers</strong>
+        <nav class="legend">
+            <span style='background:lightgrey;'></span>
+            <label>0</label>
+            <br>
+            <span style="background:rgb(255,162,78);"></span>
+            <label>1</label>
+            <br>
+            <span style="background:rgb(229,126,34);"></span>
+            <label>2</label>
+            <br>
+            <span style="background:rgb(135,75,22);"></span>
+            <label>3</label>
+            <br>
+            <span style="background:rgb(99,55,17);"></span>
+            <label>4 or more</label>
+            <br>
+            <small>Source: &copy;Mosaik (Jan. 2016).</small>
+    </div>
+    <div id="legend_f477" style="display:none;">
+        <strong>Number of Providers</strong>
+        <nav class='legend'>
+            <span style="background:lightgrey;"></span>
+            <label>0</label>
+            <br>
+            <span style="background:rgb(0,184,255);"></span>
+            <label>1</label>
+            <br>
+            <span style="background:rgb(0,151,225);"></span>
+            <label>2</label>
+            <br>
+            <span style="background:rgb(0,79,167);"></span>
+            <label>3</label>
+            <br>
+            <span style="background:rgb(1,46,109);"></span>
+            <label>4 or more</label>
+            <br>
+            <small>Source: FCC Form 477 (Dec. 2015).</small>
+    </div>
+    <div id="map"></div>
+    <script src="https://code.jquery.com/jquery-1.12.4.min.js" integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ=" crossorigin="anonymous"></script>
+    <script src="https://api.tiles.mapbox.com/mapbox.js/v3.0.1/mapbox.js"></script>
+    <script src="https://api.tiles.mapbox.com/mapbox.js/plugins/leaflet-fullscreen/v0.0.4/Leaflet.fullscreen.min.js"></script>
+    <script>
+    L.mapbox.accessToken = 'pk.eyJ1IjoiY29tcHV0ZWNoIiwiYSI6InMyblMya3cifQ.P8yppesHki5qMyxTc2CNLg';
+
+    var map = L.mapbox.map('map', 'fcc.k74ed5ge', {
+        attributionControl: false,
+        center: [35, -96],
+        zoom: 4,
+        minZoom: 4,
+        maxZoom: 6,
+        legendControl: {
+            position: 'bottomleft'
+        }
+    });
+    //set attribution to false, so doesn't pull layer names (i.e., "OverallMobile_18th")
+
+    // add new attribution, in place of auto-generated -adds Leaflet attribution
+    var credits = L.control.attribution({
+        position: 'bottomright'
+    }).addTo(map);
+    //need position option, otherwise interferes with legend
+
+    //add Mapbox/OSM attribution
+    credits.addAttribution("© <a href='https://www.mapbox.com/map-feedback/'>Mapbox</a> © <a href='http://www.openstreetmap.org/copyright'>OpenStreetMap</a>");
+
+    //add Mosaik attribution -redundant due to legend
+    //credits.addAttribution('&copy;Mosaik (July 2015)');
+
+
+    L.control.layers({
+        'Based on FCC Form 477': L.mapbox.tileLayer('fcc.1agkxuoc').addTo(map),
+        'Based on Mosaik': L.mapbox.tileLayer('fcc.2peb1z75')
+    }, {
+        'States': L.mapbox.tileLayer('fcc.88sbhq44').addTo(map)
+    }, {
+        collapsed: false,
+        position: 'topleft'
+    }).addTo(map);
+
+    //adds legend
+    //map.legendControl.addLegend(document.getElementById('legend_Mosaik').innerHTML);
+
+    //adds legend
+    map.legendControl.addLegend(document.getElementById('legend_f477').innerHTML);
+
+    //adds full screen control
+    L.control.fullscreen().addTo(map);
+
+    // Add and remove legends based on base layer selection
+    map.on('baselayerchange', function(eventLayer) {
+        // Switch to the Mosaik legend
+        if (eventLayer.name === 'Based on Mosaik') {
+            map.legendControl.addLegend(document.getElementById('legend_Mosaik').innerHTML);
+            map.legendControl.removeLegend(document.getElementById('legend_f477').innerHTML);
+        } else { // switch to the f477 legend
+            map.legendControl.addLegend(document.getElementById('legend_f477').innerHTML);
+            map.legendControl.removeLegend(document.getElementById('legend_Mosaik').innerHTML);
+        }
+    });
+
+    // force layer control to remain expanded
+    $('.leaflet-control-layers').hover(function(){
+        $(this).addClass('leaflet-control-layers-expanded');
+    });
+
+    map.on('click', function(eventLayer) {
+        $('.leaflet-control-layers').addClass('leaflet-control-layers-expanded');
+    });
+
+    // reposition full screen control
+    var fullScrnCtrl = $('.leaflet-control-fullscreen').clone();
+    $('.leaflet-control-fullscreen').remove();
+    $('.leaflet-control-zoom').after(fullScrnCtrl);
+
+    // point full screen mode to URL (iframe workaround)
+    $('.leaflet-control-fullscreen-button').attr({
+        href: 'https://fcc.github.io/maps-pub-wtb/19-cmrs-report/3GorBetter-number-providers-ye-2015/',
+        target: '_top',
+        rel: 'noopener noreferrer'
+    });
+
+    </script>
+</body>
+
+</html>
