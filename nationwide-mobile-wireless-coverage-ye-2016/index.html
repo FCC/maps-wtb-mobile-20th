@@ -64,11 +64,11 @@
     //add Mosaik attribution
     credits.addAttribution('&copy;Mosaik (Jan 2017), FCC Form 477 (Dec. 2016)');
 
-    var tMosaik = L.mapbox.tileLayer('fcc.awfwpfpl');
+    var tMosaik = L.mapbox.tileLayer('fcc.awfwpfpl'); //2016 files
 
         //2015 files
     L.control.layers({
-        'Coverage based on Mosaik': tMosaik,  //2015 files
+        'Coverage based on Mosaik': tMosaik, 
         'Coverage based on FCC Form 477': L.mapbox.tileLayer('fcc.djokrpdo').addTo(map), //2015 files
     }, {
         'States': L.mapbox.tileLayer('fcc.88sbhq44').addTo(map)
