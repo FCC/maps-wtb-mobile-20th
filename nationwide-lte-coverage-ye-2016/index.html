@@ -37,21 +37,27 @@
 
 <body>
     <div id="map"></div>
-    <script src="https://api.tiles.mapbox.com/mapbox.js/v2.1.6/mapbox.js"></script>
+    <script src="https://api.tiles.mapbox.com/mapbox.js/v2.3.0/mapbox.js"></script>
     <script src="https://api.tiles.mapbox.com/mapbox.js/plugins/leaflet-fullscreen/v0.0.4/Leaflet.fullscreen.min.js"></script>
     <script>
     L.mapbox.accessToken = 'pk.eyJ1IjoiZmNjIiwiYSI6InBiaGMyLU0ifQ.LOmVYpUCFv2yWpbvxDdQNg'; //FCC acct token
  
 
-    var map = L.mapbox.map('map', 'fcc.k74ed5ge', {
+/*     var map = L.mapbox.map('map', 'fcc.k74ed5ge', {
         fullscreenControl: true,
         attributionControl: false,
         center: [35, -96],
         zoom: 4,
         minZoom: 4,
         maxZoom: 7
-    });
+    }); */
     //set attribution to false, so doesn't pull layer names (i.e., "OverallMobile_18th")
+
+var map = L.mapbox.map('map')
+      .setView([39.5, -98.5], 4);
+
+L.mapbox.styleLayer('mapbox://styles/mapbox/light-v10').addTo(map);
+
 
     // add new attribution, in place of auto-generated -adds Leaflet attribution
     var credits = L.control.attribution({
