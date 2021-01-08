@@ -86,16 +86,22 @@
     <script>
     L.mapbox.accessToken = 'pk.eyJ1IjoiZmNjIiwiYSI6InBiaGMyLU0ifQ.LOmVYpUCFv2yWpbvxDdQNg';
 
-    var map = L.mapbox.map('map', 'fcc.k74ed5ge', {
-        attributionControl: false,
-        center: [35, -96],
-        zoom: 4,
-        minZoom: 4,
-        maxZoom: 6,
-        legendControl: {
-            position: 'bottomleft'
-        }
-    });
+          // Update Style Layer call syntax - Alex Simmons, 01/08/2021
+//     var map = L.mapbox.map('map', 'fcc.k74ed5ge', {
+//         attributionControl: false,
+//         center: [35, -96],
+//         zoom: 4,
+//         minZoom: 4,
+//         maxZoom: 6,
+//         legendControl: {
+//             position: 'bottomleft'
+//         }
+//     });
+        
+    var map = L.mapbox.map('map').setView([39.5, -98.5], 4);
+        
+    L.mapbox.styleLayer('mapbox://styles/mapbox/light-v10').addTo(map);
+      
     //set attribution to false, so doesn't pull layer names (i.e., "OverallMobile_18th")
 
     // add new attribution, in place of auto-generated -adds Leaflet attribution
