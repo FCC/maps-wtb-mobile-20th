@@ -43,20 +43,14 @@
     L.mapbox.accessToken = 'pk.eyJ1IjoiZmNjIiwiYSI6ImNtYmIxMWYxOTFmMjQyanEwcXMzZ2ptZjgifQ.QwL9YqsqopFfsNKEu7BOtQ'; //FCC acct token
  
 
-/*       var map = L.mapbox.map('map', 'fcc.k74ed5ge', {
-        fullscreenControl: true,
-        attributionControl: false,
-        center: [35, -96],
-        zoom: 4,
-        minZoom: 4,
-        maxZoom: 7
-         });   */
-    //set attribution to false, so doesn't pull layer names (i.e., "OverallMobile_18th")
 
 var map = L.mapbox.map('map')
       .setView([39.5, -98.5], 4);
-L.mapbox.styleLayer('mapbox://styles/mapbox/dark-v10').addTo(map);
 
+
+L.mapbox.styleLayer('mapbox://styles/mapbox/light-v10').addTo(map);
+
+L.mapbox.styleLayer('mapbox://styles/mapbox/dark-v10').addTo(map);
 
 
 
